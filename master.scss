@@ -1,0 +1,26 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0px;
+    > div {
+        max-height: 500px;
+        min-width: 300px;
+        min-height: 300px;
+        max-width: 500px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        border: 2px solid;
+        .out {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            border: 2px solid;
+            .in{
+            border:dashed 1px ;
+            }
+        }
+    }
+}
