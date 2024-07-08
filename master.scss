@@ -1,26 +1,76 @@
+*{
+    box-sizing: border-box;
+}
 body {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+    row-gap: 10px;
     height: 100vh;
     margin: 0px;
-    > div {
+    > .num {
+        form input[type="radio"] {
+            // display: none;
+        }
+        div {
+            font-size: 20px;
+            padding: 2px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 26px;
+            height: 26px;
+            background-color: aliceblue;
+            border: 2px solid ;
+        }
+    }
+    > .board {
         max-height: 500px;
         min-width: 300px;
         min-height: 300px;
         max-width: 500px;
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: 1fr;
         grid-template-rows: repeat(3, 1fr);
         border: 2px solid;
-        .out {
+        //out row
+        > div:not(:last-child) {
+            border-bottom: 2px solid black;
+        }
+        > div {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(3, 1fr);
-            border: 2px solid;
-            .in{
-            border:dashed 1px ;
+            grid-template-rows: repeat(1, 1fr);
+            //out cell
+            > div:not(:last-child) {
+                border-right: 2px solid black;
             }
+
+            > div {
+                display: grid;
+                grid-template-columns: repeat(1, 1fr);
+                grid-template-rows: repeat(3, 1fr);
+                // in row
+
+                > div {
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    grid-template-rows: repeat(1, 1fr);
+                    > div {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                    > div:not(:last-child) {
+                        border-right: 1px solid #aaa;
+                    }
+                }
+                > div:not(:last-child) {
+                    border-bottom: 1px solid #aaa;
+                }
+            }
+            // border: 2px solid;
         }
     }
 }

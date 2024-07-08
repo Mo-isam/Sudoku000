@@ -1,26 +1,66 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  row-gap: 10px;
   height: 100vh;
   margin: 0px;
 }
-body > div {
+body > .num div {
+  font-size: 20px;
+  padding: 2px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 26px;
+  height: 26px;
+  background-color: aliceblue;
+  border: 2px solid;
+}
+body > .board {
   max-height: 500px;
   min-width: 300px;
   min-height: 300px;
   max-width: 500px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr;
   grid-template-rows: repeat(3, 1fr);
   border: 2px solid;
 }
-body > div .out {
+body > .board > div:not(:last-child) {
+  border-bottom: 2px solid black;
+}
+body > .board > div {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  border: 2px solid;
+  grid-template-rows: repeat(1, 1fr);
 }
-body > div .out .in {
-  border: dashed 1px;
+body > .board > div > div:not(:last-child) {
+  border-right: 2px solid black;
+}
+body > .board > div > div {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+body > .board > div > div > div {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(1, 1fr);
+}
+body > .board > div > div > div > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body > .board > div > div > div > div:not(:last-child) {
+  border-right: 1px solid #aaa;
+}
+body > .board > div > div > div:not(:last-child) {
+  border-bottom: 1px solid #aaa;
 }/*# sourceMappingURL=master.css.map */
