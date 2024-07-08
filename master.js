@@ -4,11 +4,19 @@
 // for (let g = 0; g < e.length; g++) {
 //     console.table(e[g]);
 // }
-
+// let a = new Set();
+// let f = 0;
+// do {
+//     f++;
+//     let x = Math.floor(Math.random() * 9 + 1);
+//     a.add(x);
+// } while (a.size < 9);
+// a.delete(9);
+// a = Array.from(a);
+// console.log(a[0], f);
 let row = [],
     box = [],
     inrow = [];
-
 let matrex = [[[[]]]];
 // matrex[0][0][0][0] = 8;
 // console.log(matrex[0][0][0][0]);
@@ -22,26 +30,50 @@ for (let g = 0; g < 3; g++) {
     matrex[g] = [];
     for (let h = 0; h < 3; h++) {
         matrex[g][h] = [];
+        let a = [];
+        do {
+            let x = Math.floor(Math.random() * 9 + 1);
+            if (!a.includes(x)) {
+                a.push(x);
+            }
+        } while (a.length < 9);
+        // console.log(a);
+
         for (let i = 0; i < 3; i++) {
             matrex[g][h][i] = [];
+
             for (let j = 0; j < 3; j++) {
-                let count = 0;
-                while (count < 100) {
-                    count++;
-                    let x = Math.floor(Math.random() * 9 + 1);
-                    if (boxchk(g, h, i, x, j)) {
-                        matrex[g][h][i][j] = x;
+                let t = true;
+
+                for (let m = 0; m < a.length; m++) {
+                    let xx = a[m];
+                    if (a[m] == -1) {
+                        continue;
+                    }
+                    if (rowchk(g, h, i, xx, j)) {
+                        matrex[g][h][i][j] = xx;
+                        a[m] = -1;
+                        t = false;
+                        // console.log(a);
                         break;
                     }
                 }
-                if (count == 100) {
+                if (t) {
                     g = h = i = 0;
                     j = -1;
-                    matrex[g][h][i][j] = count;
                     matrex[g] = [];
                     matrex[g][h] = [];
                     matrex[g][h][i] = [];
+                    // matrex[g][h][i][j] = 1000;
                     v++;
+                    // console.log(v);
+                    a = [];
+                    do {
+                        let x = Math.floor(Math.random() * 9 + 1);
+                        if (!a.includes(x)) {
+                            a.push(x);
+                        }
+                    } while (a.length < 9);
                 }
             }
         }
@@ -213,8 +245,13 @@ function chk(x, y, z, key, index) {
 //     e[i] = k;
 // }
 // let r = [1, 2, 3];
+// let arr = [[], []];
+// for (let i = 0; i < 9; i++) {
+//     for (let j = 0; j < 9; j++) {}
+// }
 let c = 0;
-let outcell = document.querySelectorAll(".outcell");
+let outcell = $(".outcell");
+// outcell[2].style.backgroundColor = "red";
 for (let i = 0; i < outcell.length; i++) {
     let inn = outcell[i].querySelectorAll(".in");
     let f = Math.floor(i / 3);
@@ -231,20 +268,21 @@ for (let i = 0; i < outcell.length; i++) {
         inn[i].textContent = l[i];
     }
 }
+let condition = 0;
+while (condition != 40) {
+    condition++;
+    let x = Math.floor(Math.random() * 9);
+    let y = Math.floor(Math.random() * 9);
+    outcell[x].querySelectorAll(".in")[y].style.color = "white";
+}
 let but1 = document.getElementById("but1");
 if (but1.checked) {
-    console.log('rrrrrrrrr');
+    console.log("rrrrrrrrr");
 
-    document.querySelector('#but1+div').style.backgroundColor = 'red';
+    // document.querySelector("#but1+div").style.backgroundColor = "red";
 }
 document.getElementById("but1").onclick = function () {
     // document.getElementById("but2");
     // document.getElementById("but1").querySelector('+div').style.backgroundColor = 'red';
 };
-// let a = new Set();
-// do {
-//     let x = Math.floor(Math.random() * 9 + 1);
-//     a.add(x);
-// } while (a.size < 9);
-
-// console.log(a);
+console.log(...matrex);
