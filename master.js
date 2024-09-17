@@ -37,24 +37,16 @@ for (let g = 0; g < 3; g++) {
                 a.push(x);
             }
         } while (a.length < 9);
-        // console.log(a);
-
         for (let i = 0; i < 3; i++) {
             matrex[g][h][i] = [];
-
             for (let j = 0; j < 3; j++) {
                 let t = true;
-
                 for (let m = 0; m < a.length; m++) {
                     let xx = a[m];
-                    if (a[m] == -1) {
-                        continue;
-                    }
                     if (rowchk(g, h, i, xx, j)) {
                         matrex[g][h][i][j] = xx;
-                        a[m] = -1;
+                        a[m] = a.pop();
                         t = false;
-                        // console.log(a);
                         break;
                     }
                 }
@@ -79,6 +71,7 @@ for (let g = 0; g < 3; g++) {
         }
     }
 }
+
 console.log("Sudoku created in", v, "Tries");
 // console.log("---------------->", matrex);
 // console.log(chk(1, 1, 1, 1, 1));
@@ -249,40 +242,105 @@ function chk(x, y, z, key, index) {
 // for (let i = 0; i < 9; i++) {
 //     for (let j = 0; j < 9; j++) {}
 // }
-let c = 0;
+let c;
 let outcell = $(".outcell");
 // outcell[2].style.backgroundColor = "red";
 for (let i = 0; i < outcell.length; i++) {
     let inn = outcell[i].querySelectorAll(".in");
     let f = Math.floor(i / 3);
-    let k = matrex[f][c];
-    if (c == 2) {
-        c = 0;
+    c = i;
+    if (i > 2 && i < 6) {
+        c = i - 3;
+    } else if (i > 5) {
+        c = i - 6;
     } else {
-        c++;
+        c = i;
     }
+    let k = matrex[f][c];
     for (let i = 0; i < inn.length; i++) {
         // console.log(f);
         let l = [...k[0], ...k[1], ...k[2]];
-        let x = Math.floor(Math.random() * 9 + 1);
-        inn[i].textContent = l[i];
+        inn[i].querySelector("p").textContent = l[i];
     }
 }
+
+//!-------------------------------------
+let innum;
+let penceil = document.getElementById("pen");
+// document.getElementById().addEventListener('click',write)
+outcell[0].querySelectorAll(".in")[0].addEventListener("click", write);
+function writeee(params) {
+    console.log("sdfghjkl");
+}
+function write() {
+    // this.style.backgroundColor = "gray";
+    console.log(this.parentNode);
+    let tx1 = clk();
+
+    let cell = this;
+    let color = cell.querySelector("p").style.color;
+    console.log(getnum(0, 0));
+    if (penceil.checked) {
+        cell.querySelector("div").style.display = "grid";
+        cell.querySelector("div").querySelectorAll("p")[tx1 - 1].textContent =
+            tx1;
+        // penceil.style.display = "none";
+    } else {
+        // cell.querySelector('p').textContent = clk();
+
+        if (color == "red" || cell.querySelector("p").style.color == "white") {
+            console.log(cell.querySelector("p").style.color);
+            let tx = cell.querySelector("p").textContent;
+            console.log(tx1, tx);
+            cell.querySelector("div").style.display = "none";
+            cell.querySelector("p").style.display = "block";
+            if (getnum(0, 0) == tx1) {
+                cell.querySelector("p").textContent = tx1;
+                cell.querySelector("p").style.color = "lightgreen";
+            } else {
+                cell.querySelector("p").textContent = tx1;
+                cell.querySelector("p").style.color = "red";
+            }
+        }
+    }
+}
+function getnum(x, y) {
+    let f = Math.floor(x / 3);
+    let c = x;
+    if (x > 2 && x < 6) {
+        c = x - 3;
+    } else if (x > 5) {
+        c = x - 6;
+    } else {
+        c = x;
+    }
+    let k = matrex[f][c];
+    let l = [...k[0], ...k[1], ...k[2]];
+    return l[y];
+}
+function clk() {
+    let num;
+    let but = document.getElementsByName("but");
+    for (let i = 0; i < but.length; i++) {
+        if (but[i].checked) {
+            num = i + 1;
+            break;
+        }
+    }
+    return num;
+}
+//!-------------------------------------
 let condition = 0;
 while (condition != 40) {
     condition++;
     let x = Math.floor(Math.random() * 9);
     let y = Math.floor(Math.random() * 9);
-    outcell[x].querySelectorAll(".in")[y].style.color = "white";
+    // outcell[x].querySelectorAll(".in")[y].style.color = "white";
+    outcell[x].querySelectorAll(".in")[y].querySelector("p").style.color =
+        "white";
+    outcell[x].querySelectorAll(".in")[y].querySelector("p").style.display =
+        "none";
+    outcell[x].querySelectorAll(".in")[y].addEventListener("click", write);
 }
-let but1 = document.getElementById("but1");
-if (but1.checked) {
-    console.log("rrrrrrrrr");
 
-    // document.querySelector("#but1+div").style.backgroundColor = "red";
-}
-document.getElementById("but1").onclick = function () {
-    // document.getElementById("but2");
-    // document.getElementById("but1").querySelector('+div').style.backgroundColor = 'red';
-};
 console.log(...matrex);
